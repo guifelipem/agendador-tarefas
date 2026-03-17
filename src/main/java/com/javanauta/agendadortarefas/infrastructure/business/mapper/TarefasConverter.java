@@ -2,7 +2,6 @@ package com.javanauta.agendadortarefas.infrastructure.business.mapper;
 
 import com.javanauta.agendadortarefas.infrastructure.business.dto.TarefasDTO;
 import com.javanauta.agendadortarefas.infrastructure.entity.TarefasEntity;
-import org.mapstruct.MapMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
