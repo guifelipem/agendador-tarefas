@@ -1,86 +1,73 @@
-# Agendador de Tarefas
+# API de Agendamento de Tarefas
 
-API REST desenvolvida com Spring Boot para gerenciamento de tarefas agendadas. O projeto permite criar, listar, atualizar e excluir tarefas, além de controlar o status de notificações.
+A API de Agendamento é responsável pelo gerenciamento das tarefas dos usuários. O serviço realiza o cadastro, consulta e atualização de tarefas, além do processamento de eventos agendados e integração com o serviço de notificações.
+
+## Arquitetura
+
+Este serviço faz parte do sistema de Agendamento de Tarefas, composto pelos seguintes microsserviços:
+
+- API de Usuários
+- API de Agendamento de Tarefas
+- Serviço de Notificação
+- Backend for Frontend (BFF)
 
 ## Tecnologias
 
 - Java 21
-- Spring Boot 3
-- Spring Web
+- Spring Boot
 - Spring Security
 - Spring Data MongoDB
 - MongoDB
-- OpenFeign
 - JWT
-- Lombok
+- OpenFeign
 - MapStruct
-- Gradle
 - Docker
 
-## Funcionalidades
+## Responsabilidades
 
 - Cadastro de tarefas
-- Listagem de tarefas do usuário
-- Busca de tarefas por período
-- Atualização de tarefas
-- Alteração do status de notificações
-- Exclusão de tarefas
-- Autenticação via JWT
+- Consulta de tarefas por usuário
+- Atualização e exclusão de tarefas
+- Busca por período
+- Controle do status das notificações
+- Processamento automático de tarefas agendadas
+- Comunicação com os demais microsserviços
 
-## Endpoints
+## Principais endpoints
 
 | Método | Endpoint | Descrição |
 |---------|----------|-----------|
 | POST | /tarefas | Cadastra uma tarefa |
 | GET | /tarefas | Lista as tarefas do usuário |
-| GET | /tarefas/eventos | Busca tarefas por período |
-| PUT | /tarefas?id={id} | Atualiza uma tarefa |
-| PATCH | /tarefas?id={id}&status={status} | Atualiza o status |
-| DELETE | /tarefas?id={id} | Remove uma tarefa |
+| PUT | /tarefas/{id} | Atualiza uma tarefa |
+| DELETE | /tarefas/{id} | Remove uma tarefa |
+
+## Estrutura do projeto
+
+```text
+src/main/java
+├── business
+├── controller
+├── infrastructure
+├── mapper
+├── repository
+└── dto
+```
 
 ## Como executar
 
-### Pré-requisitos
+### Requisitos
 
 - Java 21
-- Gradle
 - MongoDB
-
-### Configuração
-
-Configure o MongoDB em `application.properties`:
-
-```properties
-spring.data.mongodb.uri=mongodb://localhost:27017/db_agendador
-```
-
-### Executando
+- Docker (opcional)
 
 ```bash
 ./gradlew bootRun
 ```
 
-ou
+## Integração
 
-```bash
-gradlew.bat bootRun
-```
-
-A aplicação será iniciada na porta **8081**.
-
-## Estrutura
-
-```
-src
-├── controller
-├── business
-├── dto
-├── entity
-├── repository
-├── security
-└── mapper
-```
-
-## Autor
-
-Desenvolvido por Guilherme Felipe.
+- Consome a API de Usuários para validação das informações do usuário.
+- Consome o Serviço de Notificação para envio de e-mails automáticos.
+- É consumido pelo Backend for Frontend (BFF).
